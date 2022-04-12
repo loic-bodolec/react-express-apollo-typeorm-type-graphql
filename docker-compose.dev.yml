@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    command: npm run start:watch
+    stdin_open: true
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    ports:
+      - ${API_PORT}:4000
+    environment:
+      - NODE_ENV=development
+      - TYPEORM_LOGGING=true
+  web-client:
+    command: npm run start
+    stdin_open: true
+    volumes:
+      - ./web-client:/app
+      - /app/node_modules
+    ports:
+      - ${WEB_CLIENT_PORT}:3000
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_PORT=${API_PORT}
